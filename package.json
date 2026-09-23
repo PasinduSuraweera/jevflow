@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server/index.mjs",
     "test": "node --test",
-    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check dist/app.js"
+    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check dist/app.js && node --check dist/recipes.js"
   },
   "license": "MIT"
 }

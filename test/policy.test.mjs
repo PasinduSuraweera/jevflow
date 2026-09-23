@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');
 function policy(result, threshold=80, selected='support'){
  const scope={selected,$:()=>({value:threshold})};vm.createContext(scope);
- vm.runInContext(source.slice(source.indexOf('function policy('),source.indexOf('function invalidate(')),scope);
+ vm.runInContext(source.slice(source.indexOf('function policy('),source.indexOf('function render(')),scope);
  return scope.policy(result);
 }
 test('threshold change moves same choice from action to review without provider request',()=>{const r={type:'choice',decision:'billing',confidence:.85};assert.equal(policy(r,80),'route_to("billing_queue")');assert.equal(policy(r,90),'request_human_review()')});

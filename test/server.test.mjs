@@ -25,3 +25,15 @@ test('yes-no uses probability of yes and carries hard approval flag',()=>{const 
 test('score keeps rubric scale separate from confidence',()=>{const req=buildRequest({scenario:'rag',context:{query:'q',document:'d'}});const r=normalizeResponse({answers:{decision:{type:'score',score:1.6,confidence:.72,probabilities:{0:.1,1:.2,2:.7}}}},req,'rag');assert.equal(r.score,1.6);assert.equal(r.maxScore,2);assert.equal(r.confidence,.72)});
 test('invalid probability distributions rejected',()=>{const req=buildRequest({scenario:'support',context});assert.throws(()=>normalizeResponse({answers:{decision:{type:'choice',choice:'billing',confidence:.9,probabilities:{billing:.9,technical:.9,other:.9}}}},req,'support'))});
 test('public origin requires HTTPS outside loopback',()=>{assert.throws(()=>createApp({publicOrigin:'http://example.com'}));assert.throws(()=>createApp({publicOrigin:'https://example.com/path'}))});
+test('API status exposes readiness without provider calls or keys',async t=>{const {url}=await setup(t,{fetchImpl:()=>assert.fail('provider called')});const res=await fetch(url+'/api/status');assert.equal(res.status,200);assert.deepEqual(await res.json(),{ready:true,provider:'typesafe',keyStorage:'none'})});
+test('loopback alias works only on configured port',async t=>{const {post}=await setup(t);assert.equal((await post(undefined,{Origin:'http://127.0.0.1:3000'})).status,200);assert.equal((await post(undefined,{Origin:'http://127.0.0.1:4000'})).status,403)});
+test('recipe module is served for frontend import',async t=>{const {url}=await setup(t);const res=await fetch(url+'/recipes.js');assert.equal(res.status,200);assert.ok(res.headers.get('content-type').startsWith('text/javascript'))});
+for(const scenario of ['router','browser','npc'])test(`${scenario} forwards to real transport and returns provider decision`,async t=>{
+ const {recipes}=await import('../dist/recipes.js');
+ const {post}=await setup(t,{fetchImpl:async(_url,init)=>{
+  const criteria=JSON.parse(init.body).questions.decision.criteria;
+  const labels=Object.keys(criteria);const decision=labels.at(-1);
+  return new Response(JSON.stringify({model:'jev-test',answers:{decision:{type:'choice',choice:decision,confidence:.88,probabilities:Object.fromEntries(labels.map(k=>[k,k===decision?.88:.12/(labels.length-1)]))}}}));
+ }});
+ const res=await post({scenario,context:recipes[scenario].input});assert.equal(res.status,200);const data=await res.json();assert.equal(data.mode,'live');assert.equal(data.scenario,scenario);
+});
