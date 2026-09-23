@@ -49,3 +49,183 @@
 [data-night=true] .need progress,[data-night=true] .need progress::-webkit-progress-bar{background:#40513b}[data-night=true] .need progress::-webkit-progress-value{background:#a5b877}
 [data-night=true] #error,[data-night=true] #render-error{background:#483b2d;color:#f1d5ae;border-color:#8d7250}
 [data-night=true] .game-ui .world-stage{background:#1e2d3b}
+
+/* Bigger world: minimap, resident editor, conditions and rules panels. */
+@media(min-width:761px){.game-ui #hud-panels{width:340px}}
+.game-ui .panel h4{font:600 10px ui-monospace,monospace;letter-spacing:1.2px;text-transform:uppercase;color:#7d8b6f;margin:18px 0 8px}
+.game-ui .panel label{display:block;font-size:11px;color:#6f7d63;margin:6px 0}
+.game-ui .panel label>input:not([type=checkbox]):not([type=range]),.game-ui .panel label>select,.game-ui .panel label>textarea{display:block;width:100%;margin-top:4px;font-size:12px}
+textarea{font:inherit;background:#f5f5eb;border:1px solid #d9decd;border-radius:7px;color:#53634c;padding:8px;width:100%;resize:vertical;min-height:52px}
+input[type=color]{padding:2px;height:32px;cursor:pointer}
+input[type=range]{width:100%;accent-color:#6d9060;margin:4px 0 0;padding:0;background:none;border:0}
+.slider output{float:right;font:10px ui-monospace,monospace;color:#9a874a}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
+.check{display:flex!important;align-items:center;gap:8px;cursor:pointer}.check input{accent-color:#55704f;width:15px;height:15px;margin:0}.check small{margin-left:auto;font-size:9px;color:#9aa38c}
+.checks{display:grid;gap:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips button,.chip{font-size:11px;padding:7px 10px}
+.button-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}.button-row select{flex:1}.button-row button{font-size:11px;padding:8px 11px}
+.button-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.button-grid button{font-size:11px;padding:8px}
+.warn{color:#9a4433;border-color:#e2c2b4}.warn:hover{background:#f6e3da}
+.hint{font-size:10px;color:#909980;line-height:1.6}kbd{font:10px ui-monospace,monospace;background:#eef0e4;border:1px solid #d5dbc8;border-radius:4px;padding:0 4px;margin:0 1px}
+.editor{display:grid;gap:2px;padding-top:8px}#edit-error{font-size:11px;color:#9a4433;background:#f8e9df;padding:8px;border-radius:7px}
+.goal-line{font-size:11px;color:#8a7a45;font-style:italic;margin:-4px 0 6px}
+.skill-row{display:flex;justify-content:space-between;font-size:10px;color:#7c8d70}#skill-stars{color:#c49a3c;letter-spacing:2px}
+.bond{margin:9px 0}.bond span{display:flex;align-items:center;gap:6px;font-size:11px;color:#6f7d63;margin-bottom:4px}.bond i{width:8px;height:8px;border-radius:50%;display:inline-block}.bond progress{display:block;width:100%;height:5px;appearance:none;border:none;border-radius:9px;background:#edf0e5}.bond progress::-webkit-progress-bar{background:#edf0e5;border-radius:9px}.bond progress::-webkit-progress-value{background:#d2a0b4;border-radius:9px}.bond progress::-moz-progress-bar{background:#d2a0b4;border-radius:9px}.resident-card{padding:8px 10px;margin-top:5px}.resident-card .resident-task{margin:3px 0 4px}
+.residents{flex-wrap:wrap}.residents button{flex:1 1 30%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.residents i,.resident-card-head i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;flex:none}
+.residents button.selected{background:#e7ecda;border-color:#a4b491}
+#companion-result{font-size:11px;color:#8a6a7a}
+.council-result{font-size:11px;color:#55704f;font-style:italic}
+.town-totals{gap:8px}.town-totals span{flex:1}.upgrades button{text-align:left}
+.resident-overview{max-height:max(180px,calc(100dvh - 480px));overflow-y:auto;scrollbar-width:thin;scrollbar-color:#b2bda6 transparent}.resident-meters{flex-wrap:wrap;row-gap:1px}
+.game-ui .weather-pill #season-name{border-left:1px solid #d8ddcc;padding-left:12px;color:#8c947e}
+.minimap{position:fixed;z-index:8;right:24px;bottom:24px;padding:7px;border-radius:16px;line-height:0}.minimap canvas{position:static;width:150px;height:150px;border-radius:50%;cursor:crosshair}
+body:has(#hud-panels:not([hidden])) .minimap{display:none}
+.dock-tabs button{padding:8px 10px}
+@media(max-width:1100px) and (min-width:761px){.game-ui #hud-panels{width:310px}}@media(max-width:1100px){.minimap canvas{width:120px;height:120px}}
+@media(max-height:780px) and (min-width:761px){.minimap canvas{width:110px;height:110px}.resident-overview{max-height:max(150px,calc(100dvh - 420px))}}
+@media(max-width:760px){.minimap{display:none}.game-ui .weather-pill #season-name{display:none}#resident-cards{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))!important;max-height:130px;overflow-y:auto}.resident-meters span:nth-child(4){display:none}.dock-tabs button{padding:3px 6px}}
+[data-night=true] textarea,[data-night=true] kbd{color:#e0e6d6;background:#2a3e34;border-color:#4c6146}
+[data-night=true] .game-ui .panel h4,[data-night=true] .game-ui .panel label,[data-night=true] .hint,[data-night=true] .skill-row,[data-night=true] .bond span,[data-night=true] .check small{color:#b1bea6}
+[data-night=true] .goal-line{color:#d9c68a}[data-night=true] .council-result{color:#c9dcb1}[data-night=true] #companion-result{color:#d9b3c4}
+[data-night=true] .warn{color:#f1b7a2;border-color:#7d5646}[data-night=true] #edit-error{background:#483b2d;color:#f1d5ae}
+[data-night=true] .game-ui .weather-pill #season-name{color:#b1bea6;border-color:#536350}
+[data-night=true] .bond progress,[data-night=true] .bond progress::-webkit-progress-bar{background:#40513b}
+
+/* Liquid glass: every floating surface is translucent, saturated and blurred, with a bright rim and a soft top sheen.
+   The sheen is a background layer so it stays put while scrollable panels scroll. */
+:root{--glass:linear-gradient(150deg,rgba(255,255,255,.64),rgba(255,255,255,.36));--sheen:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);--rim:rgba(255,255,255,.8);--glass-inset:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.3);--glass-shadow:0 12px 40px rgba(28,48,30,.16),0 2px 8px rgba(28,48,30,.08);--glass-blur:blur(28px) saturate(190%) brightness(1.05);--chip:rgba(255,255,255,.46);--chip-sheen:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0) 60%);--chip-rim:rgba(255,255,255,.78);--chip-hover:rgba(255,255,255,.75);--ink:#1f2d21;--soft-ink:#4b5a44;--selected:rgba(170,208,150,.42);--selected-rim:rgba(110,160,95,.65)}
+:root[data-night=true]{--glass:linear-gradient(150deg,rgba(46,66,60,.62),rgba(16,28,30,.52));--sheen:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 42%);--rim:rgba(255,255,255,.2);--glass-inset:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -1px 0 rgba(255,255,255,.05),inset 0 0 0 1px rgba(255,255,255,.07);--glass-shadow:0 14px 44px rgba(0,0,0,.42);--glass-blur:blur(28px) saturate(160%) brightness(.95);--chip:rgba(255,255,255,.07);--chip-sheen:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,0) 60%);--chip-rim:rgba(255,255,255,.16);--chip-hover:rgba(255,255,255,.16);--ink:#eff3e6;--soft-ink:#c3cfb8;--selected:rgba(150,190,120,.24);--selected-rim:rgba(170,210,140,.45)}
+.game-ui .hud-glass,.game-ui .weather-pill,.game-ui #hud-panels,.game-ui .journal,.game-ui .village-stats span,.game-ui .world-status,.game-ui .camera-controls button,[data-night=true] .game-ui .hud-glass,[data-night=true] .game-ui .weather-pill,[data-night=true] .game-ui #hud-panels,[data-night=true] .game-ui .journal,[data-night=true] .game-ui .village-stats span,[data-night=true] .game-ui .world-status,[data-night=true] .game-ui .camera-controls button{background:var(--sheen),var(--glass);border:1px solid var(--rim);box-shadow:var(--glass-inset),var(--glass-shadow);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);color:var(--ink)}
+.game-ui #hud-panels,.game-ui .resident-overview{border-radius:26px}.game-ui .journal{border-radius:22px}.game-ui .game-dock{border-radius:30px}.game-ui .weather-pill,.game-ui .village-stats span,.game-ui .world-status{border-radius:999px;font-weight:550}.game-ui #fullscreen{border-radius:16px}.game-ui .camera-controls button{border-radius:50%}@media(min-width:761px){.game-ui .weather-pill{padding:10px 20px}.game-ui .village-stats span{padding:6px 12px}.game-ui .world-status{padding:9px 16px}.game-ui .camera-controls button{width:36px;height:36px}}.game-ui .minimap{border-radius:28px}.minimap canvas{box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.game-ui .drawer-heading,[data-night=true] .game-ui .drawer-heading{background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,.18));border-bottom:1px solid var(--rim);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);color:var(--ink);font-size:13px}
+[data-night=true] .game-ui .drawer-heading{background:linear-gradient(180deg,rgba(60,84,76,.55),rgba(30,46,44,.3))}
+/* Controls inside glass become lighter glass chips. */
+.game-ui #hud-panels button,.game-ui .transport button,.game-ui .camera-controls button,.game-ui #fullscreen,.game-ui .resident-card,.game-ui .news-heading button,[data-night=true] .game-ui #hud-panels button,[data-night=true] .game-ui .transport button,[data-night=true] .game-ui .resident-card,[data-night=true] .game-ui .news-heading button,[data-night=true] .game-ui #fullscreen{background:var(--chip-sheen),var(--chip);border:1px solid var(--chip-rim);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 3px rgba(28,48,30,.07);color:var(--ink);border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+[data-night=true] .game-ui #hud-panels button,[data-night=true] .game-ui .transport button,[data-night=true] .game-ui .resident-card{box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.game-ui #hud-panels button:hover:not(:disabled),.game-ui .transport button:hover:not(:disabled),.game-ui .camera-controls button:hover,.game-ui .resident-card:hover{background:var(--chip-hover)}
+.game-ui .dock-tabs button,[data-night=true] .game-ui .dock-tabs button{background:transparent;border:1px solid transparent;box-shadow:none;border-radius:18px;color:var(--ink)}
+.game-ui .dock-tabs button[aria-expanded=true],[data-night=true] .game-ui .dock-tabs button[aria-expanded=true],.game-ui .resident-card[aria-pressed=true],[data-night=true] .game-ui .resident-card[aria-pressed=true],.game-ui #hud-panels .residents button.selected,[data-night=true] .game-ui #hud-panels .residents button.selected{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 70%),var(--selected);border-color:var(--selected-rim);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 10px rgba(60,110,60,.14);color:var(--ink)}
+.game-ui .transport .primary,.game-ui #hud-panels .primary,[data-night=true] .game-ui .transport .primary,[data-night=true] .game-ui #hud-panels .primary{background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0) 55%),linear-gradient(180deg,#5b8a5c,#3b6645);border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 18px rgba(45,95,55,.32);color:#fff;border-radius:16px;font-weight:600}
+.game-ui .primary:hover:not(:disabled){filter:brightness(1.08)}
+.game-ui #hud-panels .warn{color:#a2402c}[data-night=true] .game-ui #hud-panels .warn{color:#ffb9a3}
+.game-ui .resident-card.needs-care{border-left:3px solid #d99a5c}
+.game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),.game-ui select,.game-ui textarea,[data-night=true] .game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),[data-night=true] .game-ui select,[data-night=true] .game-ui textarea{background:var(--chip);border:1px solid var(--chip-rim);box-shadow:inset 0 1px 3px rgba(28,48,30,.1);border-radius:12px;color:var(--ink);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.game-ui kbd,[data-night=true] .game-ui kbd{background:var(--chip);border-color:var(--chip-rim);color:var(--ink)}
+/* Readable text on glass: stronger ink and a softer secondary ink instead of the faint greys used on paper. */
+.game-ui,.game-ui .brand,.game-ui .resident-header h2,.game-ui .thought p,.game-ui .town h3,.game-ui .influence h3,.game-ui .rules h3,.game-ui .town-totals b,.game-ui .resident-meters strong,.game-ui .resident-card-head b,.game-ui .journal li:first-child,[data-night=true] .game-ui .brand,[data-night=true] .game-ui .thought p,[data-night=true] .game-ui .town-totals b,[data-night=true] .game-ui .resident-meters strong,[data-night=true] .game-ui .journal li:first-child{color:var(--ink)}
+.game-ui .eyebrow,.game-ui .brand small,.game-ui .world-title .eyebrow,.game-ui .privacy,.game-ui .usage,.game-ui .hint,.game-ui .settings label,.game-ui #personality,.game-ui .resident-meters span,.game-ui .resident-card-head small,.game-ui #overview-summary,.game-ui .journal li,.game-ui .journal time,.game-ui .panel p,.game-ui .need>div,.game-ui .thought>span,.game-ui summary,.game-ui details p,.game-ui .tag,.game-ui .town-totals,.game-ui footer,.game-ui #weather-name,.game-ui .weather-pill #season-name,.game-ui .panel h4,.game-ui .panel label,.game-ui .goal,.game-ui .skill-row,.game-ui .bond span,.game-ui .check small,.game-ui .resident-card .resident-task,.game-ui .slider output,.game-ui .goal b,.game-ui .probability,
+[data-night=true] .game-ui .eyebrow,[data-night=true] .game-ui .brand small,[data-night=true] .game-ui .privacy,[data-night=true] .game-ui .usage,[data-night=true] .game-ui .hint,[data-night=true] .game-ui .settings label,[data-night=true] .game-ui #personality,[data-night=true] .game-ui .resident-meters span,[data-night=true] .game-ui .resident-card-head small,[data-night=true] .game-ui #overview-summary,[data-night=true] .game-ui .journal li,[data-night=true] .game-ui .panel p,[data-night=true] .game-ui .need>div,[data-night=true] .game-ui .thought>span,[data-night=true] .game-ui summary,[data-night=true] .game-ui details p,[data-night=true] .game-ui .tag,[data-night=true] .game-ui .town-totals,[data-night=true] .game-ui footer,[data-night=true] .game-ui #weather-name,[data-night=true] .game-ui .panel h4,[data-night=true] .game-ui .panel label,[data-night=true] .game-ui .skill-row,[data-night=true] .game-ui .bond span,[data-night=true] .game-ui .check small,[data-night=true] .game-ui .resident-card .resident-task{color:var(--soft-ink)}
+.game-ui .resident-card .resident-task,.game-ui .journal li:first-child{font-weight:550}
+.game-ui .goal,.game-ui .probability,.game-ui .journal li,.game-ui details,.game-ui .dock-tabs,.game-ui footer{border-color:rgba(255,255,255,.55)}
+[data-night=true] .game-ui .goal,[data-night=true] .game-ui .probability,[data-night=true] .game-ui .journal li,[data-night=true] .game-ui details,[data-night=true] .game-ui .dock-tabs,[data-night=true] .game-ui footer{border-color:rgba(255,255,255,.12)}
+.game-ui .need progress,.game-ui .bond progress{background:rgba(255,255,255,.45);box-shadow:inset 0 1px 2px rgba(28,48,30,.12)}.game-ui .need progress::-webkit-progress-bar,.game-ui .bond progress::-webkit-progress-bar{background:rgba(255,255,255,.45)}
+[data-night=true] .game-ui .need progress,[data-night=true] .game-ui .bond progress,[data-night=true] .game-ui .need progress::-webkit-progress-bar,[data-night=true] .game-ui .bond progress::-webkit-progress-bar{background:rgba(255,255,255,.1)}
+#error,#edit-error{border-radius:12px}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--glass:linear-gradient(150deg,rgba(255,255,255,.96),rgba(247,249,240,.92))}:root[data-night=true]{--glass:linear-gradient(150deg,rgba(40,58,54,.97),rgba(22,34,34,.95))}}
+@media(prefers-reduced-transparency:reduce){:root{--glass:linear-gradient(150deg,rgba(255,255,255,.95),rgba(247,249,240,.92))}:root[data-night=true]{--glass:linear-gradient(150deg,rgba(40,58,54,.96),rgba(22,34,34,.94))}}
+
+/* Floating glass tags for places and residents, positioned over the 3D world every frame. */
+.world-tags{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;contain:strict}
+.tag3d{position:absolute;left:0;top:0;display:flex;align-items:center;gap:7px;white-space:nowrap;pointer-events:auto;cursor:pointer;color:var(--ink);font:12px/1.15 system-ui,-apple-system,"Segoe UI",sans-serif;border-radius:999px;background:var(--sheen),var(--glass);border:1px solid var(--rim);box-shadow:var(--glass-inset),0 6px 18px rgba(28,48,30,.2);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);transition:opacity .25s,filter .2s;will-change:transform;user-select:none}
+.tag3d::after{content:'';position:absolute;left:50%;bottom:-5px;width:9px;height:9px;transform:translateX(-50%) rotate(45deg);background:var(--glass);border-right:1px solid var(--rim);border-bottom:1px solid var(--rim);border-bottom-right-radius:2px}
+.tag3d:hover{filter:brightness(1.07);z-index:100000!important}
+.tag3d.place{padding:4px 13px 4px 4px}
+.tag-icon{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.55));box-shadow:inset 0 -1px 2px rgba(28,48,30,.08),0 1px 3px rgba(28,48,30,.12)}
+.tag-text{display:flex;flex-direction:column;gap:1px}.tag-text b{font-weight:680;font-size:12px;letter-spacing:-.1px}.tag-text small{font-size:10px;font-weight:550;color:var(--soft-ink)}.tag-text small:empty{display:none}
+.tag3d.closed .tag-icon{filter:grayscale(.9);opacity:.7}.tag3d.closed .tag-text small{color:#a0553d}
+.tag3d.person{padding:3px 4px 3px 10px;gap:6px;font-size:11.5px}
+.tag3d.person i{width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.8)}
+.tag3d.person b{font-weight:680}
+.tag-act{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.6));box-shadow:0 1px 3px rgba(28,48,30,.12)}
+.tag3d.person:not(:has(.tag-act:not([hidden]))){padding-right:11px}
+.tag3d.person.selected{border-color:#ffe39a;box-shadow:var(--glass-inset),0 0 0 2px rgba(255,219,120,.75),0 8px 22px rgba(28,48,30,.28)}
+.tag3d.person.care{border-color:rgba(230,150,80,.85)}.tag3d.person.care i{box-shadow:0 0 0 2px #f0b070}
+.tag3d.person.inside{opacity:.7}
+.tag3d.person.thinking .tag-act{animation:tag-think 1.1s ease-in-out infinite}
+@keyframes tag-think{50%{transform:scale(1.18)}}
+.world-tags.far .tag3d.place{padding:3px 9px 3px 3px;font-size:10px;gap:5px}.world-tags.far .tag-icon{width:19px;height:19px;font-size:10px}.world-tags.far .tag-text b{font-size:10px}.world-tags.far .tag-text small{display:none}
+.world-tags.far .tag3d.person{font-size:10px;padding:2px 3px 2px 7px}.world-tags.far .tag-act{width:17px;height:17px;font-size:10px}
+[data-night=true] .tag-icon,[data-night=true] .tag-act{background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+[data-night=true] .tag3d{box-shadow:var(--glass-inset),0 6px 18px rgba(0,0,0,.45)}
+[data-night=true] .tag3d.closed .tag-text small{color:#f0a88e}
+@media(prefers-reduced-motion:reduce){.tag3d.person.thinking .tag-act{animation:none}}
+.world-tags.tiny .tag3d.place{padding:2px;gap:0}.world-tags.tiny .tag3d.place .tag-text{display:none}.world-tags.tiny .tag3d.place:hover .tag-text,.world-tags.tiny .tag3d.place:active .tag-text{display:flex;padding:0 8px 0 5px}
+
+/* Line icons and resident portraits. */
+.icon{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em;overflow:visible}
+.glyph{display:inline-flex;align-items:center;justify-content:center;font-style:normal;line-height:0}
+.game-ui .brand .glyph{font-size:26px;color:#5f8a5c;margin-right:2px}[data-night=true] .game-ui .brand .glyph{color:#c7dca8}
+.game-ui .weather-pill #weather-icon{font-size:19px;color:#c79a3a}[data-night=true] .game-ui .weather-pill #weather-icon{color:#e6d59a}
+.game-ui #fullscreen .glyph,.game-ui .camera-controls .glyph{font-size:17px}
+.game-ui .village-stats span{display:inline-flex;align-items:center;gap:5px}.game-ui .village-stats .glyph{font-size:13px;opacity:.85}.game-ui .village-stats b{font-weight:650}
+.dock-tabs button{display:flex;flex-direction:column;align-items:center;gap:3px}.dock-tabs .glyph{font-size:20px}
+.game-ui .transport button{display:inline-flex;align-items:center;justify-content:center;gap:7px}.game-ui .transport .glyph{font-size:14px}
+#close-panel .glyph{font-size:18px}
+summary .glyph{font-size:14px;opacity:.75}
+.game-ui .journal li{display:block}.game-ui .journal li .icon{margin-right:6px;font-size:13px;color:var(--ink);opacity:.8}
+.probability>span:first-child{display:inline-flex;align-items:center;gap:7px}.probability .icon{font-size:13px}
+.resident-task{display:flex!important;align-items:center;gap:6px}.resident-task .glyph{font-size:13px;color:var(--ink)}.resident-task>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tag-icon .icon{width:15px;height:15px;color:#3d5a3a}.tag-act .icon{width:13px;height:13px;color:#3d5a3a}
+[data-night=true] .tag-icon .icon,[data-night=true] .tag-act .icon{color:#e4edd2}
+.world-tags.far .tag-icon .icon{width:11px;height:11px}.world-tags.far .tag-act .icon{width:10px;height:10px}
+.face{display:inline-block;width:22px;height:22px;border-radius:50%;overflow:hidden;flex:none;background:#f3efe4;box-shadow:0 0 0 1.5px rgba(255,255,255,.9),0 1px 4px rgba(28,48,30,.18);vertical-align:middle}
+.face svg{display:block;width:100%;height:100%}
+.face.big{width:46px;height:46px;box-shadow:0 0 0 2.5px rgba(255,255,255,.9),0 4px 12px rgba(28,48,30,.2)}
+.resident-header{justify-content:flex-start!important;gap:12px}.resident-header>span:last-child{margin-left:auto}
+.residents button{display:inline-flex;align-items:center;justify-content:center;gap:6px}.residents .face{width:20px;height:20px}
+.resident-card-head .face{width:26px;height:26px;margin-right:2px}
+.bond span .face{width:18px;height:18px}
+.tag3d.person{padding:3px 4px 3px 3px}.tag3d.person .face{width:22px;height:22px}.world-tags.far .tag3d.person .face{width:17px;height:17px}
+.tag3d.person.care .face{box-shadow:0 0 0 2px #f0b070}
+.tag3d.person.selected .face{box-shadow:0 0 0 2px #ffd978}
+/* Everything floats as glass: translucent drawer header and fields instead of solid white. */
+.game-ui .drawer-heading,[data-night=true] .game-ui .drawer-heading{background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.04));border-bottom:1px solid rgba(255,255,255,.35);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%)}
+[data-night=true] .game-ui .drawer-heading{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,0));border-bottom-color:rgba(255,255,255,.1)}
+:root{--field:rgba(255,255,255,.26);--field-rim:rgba(255,255,255,.62)}:root[data-night=true]{--field:rgba(255,255,255,.06);--field-rim:rgba(255,255,255,.14)}
+.game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),.game-ui select,.game-ui textarea,[data-night=true] .game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),[data-night=true] .game-ui select,[data-night=true] .game-ui textarea{background:linear-gradient(180deg,rgba(28,48,30,.05),rgba(255,255,255,0) 60%),var(--field);border:1px solid var(--field-rim);box-shadow:inset 0 1px 2px rgba(28,48,30,.12),0 1px 0 rgba(255,255,255,.5)}
+.game-ui input::placeholder,.game-ui textarea::placeholder{color:var(--soft-ink);opacity:.8}
+.game-ui #hud-panels .quiet,[data-night=true] .game-ui #hud-panels .quiet{background:transparent;border-color:transparent;box-shadow:none}
+.game-ui #close-panel,[data-night=true] .game-ui #close-panel{background:var(--chip);border:1px solid var(--chip-rim);border-radius:50%;width:30px;height:30px;display:grid;place-items:center;padding:0}
+/* Camera controls: a vertical glass capsule on the right, clear of the dock. It steps aside for open panels. */
+@media(min-width:761px){
+ .game-ui .camera-controls{left:auto;right:24px;bottom:198px;top:auto;transform:none;flex-direction:column;gap:5px;padding:6px;border-radius:999px}
+ .game-ui .camera-controls button,[data-night=true] .game-ui .camera-controls button{width:34px;height:34px;display:grid;place-items:center;padding:0;border-radius:50%;background:transparent;border:1px solid transparent;box-shadow:none;backdrop-filter:none}
+ .game-ui .camera-controls button:hover{background:var(--chip-hover)}
+ .game-ui .camera-controls button[aria-pressed=true]{background:var(--selected);border-color:var(--selected-rim);color:var(--ink)}
+ body:has(#hud-panels:not([hidden])) .camera-controls{right:388px;bottom:24px}
+}
+@media(max-width:1100px) and (min-width:761px){.game-ui .camera-controls{bottom:168px}body:has(#hud-panels:not([hidden])) .camera-controls{right:346px}}
+@media(max-height:780px) and (min-width:761px){.game-ui .camera-controls{bottom:160px;gap:2px;padding:4px}.game-ui .camera-controls button{width:30px;height:30px}}
+@media(max-width:760px){.game-ui .camera-controls{bottom:132px;padding:3px;border-radius:999px;gap:2px}.game-ui .camera-controls button{width:28px;height:28px;display:grid;place-items:center;padding:0;background:transparent;border:0;box-shadow:none}.game-ui .world-status{bottom:132px}.game-ui .journal,.game-ui #hud-panels{bottom:170px}.game-ui #hud-panels{max-height:calc(100dvh - 370px)}}
+@media(max-width:760px){.game-ui .world-title{display:none}}
+
+/* Liquid glass, second pass: clearer glass so the world shows through, with depth from rims and shadows instead of white fills.
+   Nested surfaces never stack another white layer: headers are clear, fields are recessed, chips are thin. */
+:root{--glass:linear-gradient(150deg,rgba(255,255,255,.44),rgba(255,255,255,.16));--sheen:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0) 34%);--glass-blur:blur(30px) saturate(210%) brightness(1.06);--chip:rgba(255,255,255,.2);--chip-rim:rgba(255,255,255,.55);--chip-hover:rgba(255,255,255,.4);--chip-sheen:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 55%);--field:rgba(40,70,45,.07);--field-rim:rgba(255,255,255,.45)}
+:root[data-night=true]{--field:rgba(0,0,0,.18);--field-rim:rgba(255,255,255,.1)}
+.game-ui .drawer-heading,[data-night=true] .game-ui .drawer-heading{background:transparent;border-bottom:1px solid rgba(255,255,255,.28);backdrop-filter:none;-webkit-backdrop-filter:none;position:sticky;top:0}
+.game-ui #hud-panels{scroll-padding-top:56px}
+.game-ui #hud-panels::-webkit-scrollbar{width:6px}.game-ui #hud-panels::-webkit-scrollbar-thumb{background:rgba(255,255,255,.45);border-radius:9px}
+/* Content scrolling under the clear header fades out instead of colliding with the title. */
+.game-ui #hud-panels .panel{mask-image:linear-gradient(180deg,transparent 0,#000 14px);-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14px)}
+.game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),.game-ui select,.game-ui textarea,[data-night=true] .game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),[data-night=true] .game-ui select,[data-night=true] .game-ui textarea{background:var(--field);border:1px solid var(--field-rim);box-shadow:inset 0 1.5px 3px rgba(28,48,30,.14),0 1px 0 rgba(255,255,255,.55);backdrop-filter:none;-webkit-backdrop-filter:none}
+[data-night=true] .game-ui input:not([type=checkbox]):not([type=range]):not([type=color]),[data-night=true] .game-ui select,[data-night=true] .game-ui textarea{box-shadow:inset 0 1.5px 3px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.06)}
+.game-ui input:focus-visible,.game-ui select:focus-visible,.game-ui textarea:focus-visible{outline:2px solid rgba(120,170,100,.7);outline-offset:1px;background:rgba(255,255,255,.28)}
+.game-ui #hud-panels button,.game-ui .transport button,.game-ui .resident-card,.game-ui .news-heading button,[data-night=true] .game-ui #hud-panels button,[data-night=true] .game-ui .transport button,[data-night=true] .game-ui .resident-card,[data-night=true] .game-ui .news-heading button{backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 1px 2px rgba(28,48,30,.06)}
+.game-ui .tag-icon,.game-ui .tag-act{background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.3))}
+.game-ui .face{background:rgba(255,255,255,.35)}
+/* Camera capsule: vertically centered on the right edge, clear of the stats, minimap and dock.
+   With a panel open it rides along the panel's left side instead of dropping toward the dock. */
+@media(min-width:761px){
+ .game-ui .camera-controls{top:50%;bottom:auto;right:24px;left:auto;transform:translateY(-50%)}
+ body:has(#hud-panels:not([hidden])) .camera-controls{right:calc(24px + 340px + 12px);bottom:auto}
+}
+@media(max-width:1100px) and (min-width:761px){.game-ui .camera-controls{bottom:auto}body:has(#hud-panels:not([hidden])) .camera-controls{right:calc(24px + 310px + 10px)}}
+@media(max-height:780px) and (min-width:761px){.game-ui .camera-controls{bottom:auto}}
+
+/* A villager's day: what they are known for and today's activities, with repeated ones marked as routine. */
+.settings .wide{grid-column:1/-1}
+.known-line{font-size:11px;font-weight:600;color:var(--ink);margin:-2px 0 6px}
+.today{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 10px}.today>span{font-size:10px;color:var(--soft-ink)}
+.today-log{display:flex;flex-wrap:wrap;gap:4px}.today-chip{display:inline-flex;align-items:center;gap:3px;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:650;color:var(--ink);background:var(--chip);border:1px solid var(--chip-rim)}.today-chip .icon{font-size:12px}
+.today-chip.routine{border-color:rgba(220,150,80,.8);background:rgba(240,176,112,.22)}.today-empty{font-size:10px;color:var(--soft-ink);font-style:italic}

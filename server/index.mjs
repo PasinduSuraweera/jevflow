@@ -6,7 +6,7 @@ import { buildRequest, normalizeResponse, HttpError } from './decisions.mjs';
 
 const ROOT = fileURLToPath(new URL('../dist/', import.meta.url));
 const FILES = new Map([['/', ['world.html', 'text/html']], ['/lab', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/recipes.js', ['recipes.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/favicon.svg', ['favicon.svg', 'image/svg+xml']], ['/LICENSE.txt', ['LICENSE.txt', 'text/plain']]]);
-for (const file of ['world.html','world.css','world.js','village-engine.js','village-view.js']) FILES.set('/'+file,[file,file.endsWith('.html')?'text/html':file.endsWith('.css')?'text/css':'text/javascript']);
+for (const file of ['world.html','world.css','world.js','village-engine.js','village-view.js','icons.js']) FILES.set('/'+file,[file,file.endsWith('.html')?'text/html':file.endsWith('.css')?'text/css':'text/javascript']);
 for (const file of ['three.module.js','three.core.js']) FILES.set('/vendor/'+file,['../node_modules/three/build/'+file,'text/javascript']);
 const MAX_BODY = 32768;
 const MAX_RESPONSE = 65536;
@@ -27,10 +27,15 @@ const headers = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 };
-export function createApp({ fetchImpl = globalThis.fetch, publicOrigin = 'http://localhost:3000', timeoutMs = 15000, rateLimit = 20, maxConcurrent = 4 } = {}) {
+export function createApp({ fetchImpl = globalThis.fetch, publicOrigin = 'http://localhost:3000', extraOrigins = [], timeoutMs = 15000, rateLimit = 60, maxConcurrent = 8 } = {}) {
   const origin = new URL(publicOrigin);
   if (origin.origin !== publicOrigin || (origin.protocol !== 'https:' && !['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname))) throw new Error('PUBLIC_ORIGIN must be an HTTPS origin (HTTP is allowed only on loopback).');
   const allowedOrigins = new Set([publicOrigin]);
+  // Additional exact HTTPS origins, such as a hosting provider's preview URL. Never derived from request headers.
+  for (const extra of extraOrigins) {
+    if (new URL(extra).origin !== extra || !extra.startsWith('https://')) throw new Error('Extra origins must be exact HTTPS origins.');
+    allowedOrigins.add(extra);
+  }
   // Local aliases only, fixed to the configured port. No LAN or arbitrary Host trust.
   if (origin.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname)) {
     for (const host of ['localhost', '127.0.0.1', '[::1]']) allowedOrigins.add(`http://${host}${origin.port ? ':' + origin.port : ''}`);
@@ -111,7 +116,7 @@ export function createApp({ fetchImpl = globalThis.fetch, publicOrigin = 'http:/
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const port = Number(process.env.PORT || 3000);
   const publicOrigin = process.env.PUBLIC_ORIGIN || `http://localhost:${port}`;
-  createApp({ publicOrigin }).listen(port, process.env.HOST || '127.0.0.1', () => {
+  createApp({ publicOrigin, ...(process.env.RATE_LIMIT ? { rateLimit: Number(process.env.RATE_LIMIT) } : {}), ...(process.env.MAX_CONCURRENT ? { maxConcurrent: Number(process.env.MAX_CONCURRENT) } : {}) }).listen(port, process.env.HOST || '127.0.0.1', () => {
     console.log(`JevFlow listening on port ${port}.`);
   });
 }
