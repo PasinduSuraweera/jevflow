@@ -2,9 +2,11 @@
 
 JevFlow helps developers inspect the boundary between model predictions and software actions. Jev is the first provider.
 
-## Implemented on the BYOK branch
+## Implemented
 
-- Explicit demo/live modes and memory-only API key field.
+- Real Jev calls only, with a memory-only API key field. No simulated results.
+- Seven validated recipes, including three community-inspired examples with credits.
+- Backend readiness, visible key controls, and exact question inspection.
 - Fixed-provider server proxy with input/response validation, limits, timeout and safe errors.
 - Key clearing, cancellation and stale-result invalidation.
 - Provider probabilities, distinct score/confidence presentation and latency.

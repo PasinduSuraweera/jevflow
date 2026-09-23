@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import { buildRequest, normalizeResponse, HttpError } from './decisions.mjs';
 
 const ROOT = fileURLToPath(new URL('../dist/', import.meta.url));
-const FILES = new Map([['/', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/favicon.svg', ['favicon.svg', 'image/svg+xml']], ['/LICENSE.txt', ['LICENSE.txt', 'text/plain']]]);
+const FILES = new Map([['/', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/recipes.js', ['recipes.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/favicon.svg', ['favicon.svg', 'image/svg+xml']], ['/LICENSE.txt', ['LICENSE.txt', 'text/plain']]]);
 const MAX_BODY = 32768;
 const MAX_RESPONSE = 65536;
 async function readJson(stream, maximum) {
@@ -28,6 +28,11 @@ const headers = {
 export function createApp({ fetchImpl = globalThis.fetch, publicOrigin = 'http://localhost:3000', timeoutMs = 15000, rateLimit = 20, maxConcurrent = 4 } = {}) {
   const origin = new URL(publicOrigin);
   if (origin.origin !== publicOrigin || (origin.protocol !== 'https:' && !['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname))) throw new Error('PUBLIC_ORIGIN must be an HTTPS origin (HTTP is allowed only on loopback).');
+  const allowedOrigins = new Set([publicOrigin]);
+  // Local aliases only, fixed to the configured port. No LAN or arbitrary Host trust.
+  if (origin.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname)) {
+    for (const host of ['localhost', '127.0.0.1', '[::1]']) allowedOrigins.add(`http://${host}${origin.port ? ':' + origin.port : ''}`);
+  }
   const buckets = new Map(); let active = 0;
   const server = createServer(async (req, res) => {
     const reply = (status, body) => {
@@ -37,6 +42,7 @@ export function createApp({ fetchImpl = globalThis.fetch, publicOrigin = 'http:/
     };
     try {
       const path = new URL(req.url, publicOrigin).pathname;
+      if (path === '/api/status' && req.method === 'GET') return reply(200, { ready: true, provider: 'typesafe', keyStorage: 'none' });
       if (path !== '/api/decision') {
         if (!['GET', 'HEAD'].includes(req.method)) return reply(405, { error: 'Method not allowed.' });
         const asset = FILES.get(path);
@@ -47,7 +53,7 @@ export function createApp({ fetchImpl = globalThis.fetch, publicOrigin = 'http:/
       }
       if (req.method !== 'POST') return reply(405, { error: 'Use POST.' });
       // Compare against configuration, never against a user-controlled Host header.
-      if (req.headers.origin !== publicOrigin) return reply(403, { error: 'Request origin is not allowed.' });
+      if (!allowedOrigins.has(req.headers.origin)) return reply(403, { error: 'Request origin is not allowed.' });
       if ((req.headers['content-type'] || '').split(';')[0].trim() !== 'application/json') return reply(415, { error: 'Use application/json.' });
       const now = Date.now();
       for (const [key, bucket] of buckets) if (bucket.until <= now) buckets.delete(key);
