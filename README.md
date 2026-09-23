@@ -1,38 +1,44 @@
 # JevFlow
 
-**Semantic if-statements for your software.**
+**Willowglen: a little world with a mind of its own.**
 
-A decision workbench by [Pasindu Suraweera](https://github.com/PasinduSuraweera). Explore how model predictions become software decisions, and where uncertain outcomes need human review.
+An original open-source village simulation by [Pasindu Suraweera](https://github.com/PasinduSuraweera). Watch three villagers decide how to spend their day using TypeSafe AI's Jev System One. Change their circumstances and inspect the decisions that follow.
 
 ## What works
 
-- Seven real-API recipes: Support Routing, Agent Guardrails, RAG Decisions, GitHub Triage, Model Router, Browser Next Step, and NPC Next Move.
-- Live Jev requests using your own API key through a same-origin Node server.
-- JSON editing, validation, cancellation, and live request status.
-- Choice, score, and yes/no results with provider probabilities and measured round-trip latency.
-- Adjustable decision threshold and action previews. No external actions are executed.
-- Copyable response JSON and TypeScript/YAML examples.
+- An interactive low-poly 3D village with cottages, a café, workshop, garden and pond.
+- Mira, Rowan and Pip have distinct personalities, hunger, energy, happiness, coins and recent memories.
+- Real Jev choices drive eating, resting, working, gardening, exploring and socializing. Ordinary code controls movement and resource changes.
+- Select a villager to inspect the exact submitted context, returned probabilities and confidence.
+- Influence the world with rain, café closure and food supplies.
+- Pause, one-decision mode, simulation speed and a request budget. At most one request at a time, at least five seconds apart.
+- The original seven-recipe decision workbench remains at `/lab`.
 
-Live integration follows the official API contract and is tested with mocked provider responses. It has **not yet been verified against Jev with a real API key**. Batch evaluation and CSV import are not implemented.
+There are no local model simulations or fallback decisions. Without a key, the village is visible but villagers do not choose activities. Low confidence or request errors pause the world.
+
+Integration is tested with mocked provider responses. **Real-key Jev validation and visual 3D QA on a WebGL-enabled browser are still required.** The development browser used for this change had WebGL disabled.
 
 ## Run locally
 
-Requires Node.js 22 or later. No runtime dependencies or installation step.
+Requires Node.js 22 or later, npm and a browser with WebGL enabled. Three.js is served locally.
 
 ```sh
 git clone https://github.com/PasinduSuraweera/jevflow.git
 cd jevflow
+npm ci
 npm start
 ```
 
-Open http://localhost:3000. Paste your key and click **Run with Jev**. Each live request sends your context to TypeSafe and may incur provider charges. No request runs automatically. There is no local demo, simulated output, or fallback decision.
+Open http://localhost:3000. Paste your key and click **Start village**. This authorizes repeated live requests until you pause or exhaust the session budget (30 attempts by default). Each request sends context to TypeSafe and may incur charges. **One decision** sends one request while paused; Start lets the selected activity play out. Speed changes simulation time, not the API cooldown.
+
+The budget counts request attempts, including failures and cancellations, not tokens or currency. Refreshing resets the world and budget. Hiding the tab pauses it. See [world mechanics](docs/WORLD.md).
 
 ```sh
 npm run check
 npm test
 ```
 
-Use `npm start` for the complete app. A plain static server has no API backend, so Run stays disabled. The connection status detects this and provides a retry button.
+Use `npm start` for the complete app. A plain static server has no API backend, so the village stays disabled. The connection status detects this and provides a retry button.
 
 ## Key handling and trust
 
@@ -41,6 +47,10 @@ The key is kept in the page's password input, never in localStorage, cookies, or
 For live runs, the browser sends the key in `X-Jev-Key` to **this application's server**, which forwards it as a bearer credential to `https://api.typesafe.ai/v1/systemone`. Context goes to TypeSafe. Only enter a key on a host you trust, or self-host.
 
 The application has no database, request-body logging, API-key logging, analytics, or external frontend scripts/fonts. Errors returned to clients are sanitized. Reverse proxies, hosting infrastructure and the provider have separate logging and data policies. Disable sensitive header/body capture there too. Cancellation attempts to abort the request; it cannot guarantee cancellation of provider processing or charges.
+
+## Workbench at `/lab`
+
+The workbench retains JSON editing, choice/score/yes-no results, thresholds and TypeScript/YAML examples. Its actions are previews; village actions actually update the local game world.
 
 ## Community lab
 
@@ -74,7 +84,11 @@ Origin checking protects browser requests; it does not authenticate non-browser 
 
 | Path | Purpose |
 | --- | --- |
-| `dist/` | Frontend and shared validated recipe definitions |
+| `dist/world.html`, `world.js`, `world.css` | Village UI and request lifecycle |
+| `dist/village-view.js` | Original procedural Three.js scene |
+| `dist/village-engine.js` | Deterministic simulation and legal activities |
+| `dist/index.html` | Workbench served at `/lab` |
+| `server/village.mjs` | Validated village context and Jev question |
 | `server/index.mjs` | Static server, bounded BYOK proxy and request controls |
 | `server/decisions.mjs` | Provider request mapping and response validation |
 | `test/` | Mocked HTTP integration and policy tests |
@@ -86,4 +100,4 @@ The separate SDK example needs `npm install @typesafe-ai/sdk`, `TYPESAFE_API_KEY
 
 ## Contributing and license
 
-See CONTRIBUTING.md and ROADMAP.md. MIT licensed. Independent project, not affiliated with or endorsed by TypeSafe AI. Jev's service terms and upstream SDK license apply separately.
+See CONTRIBUTING.md and ROADMAP.md. MIT licensed. Three.js is MIT licensed under its own copyright. All village geometry is original procedural code, with no Nintendo or Stardew Valley assets. Independent project, not affiliated with or endorsed by TypeSafe AI. Jev's service terms and upstream SDK license apply separately.

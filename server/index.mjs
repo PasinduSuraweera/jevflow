@@ -5,7 +5,9 @@ import { resolve } from 'node:path';
 import { buildRequest, normalizeResponse, HttpError } from './decisions.mjs';
 
 const ROOT = fileURLToPath(new URL('../dist/', import.meta.url));
-const FILES = new Map([['/', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/recipes.js', ['recipes.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/favicon.svg', ['favicon.svg', 'image/svg+xml']], ['/LICENSE.txt', ['LICENSE.txt', 'text/plain']]]);
+const FILES = new Map([['/', ['world.html', 'text/html']], ['/lab', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/recipes.js', ['recipes.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/favicon.svg', ['favicon.svg', 'image/svg+xml']], ['/LICENSE.txt', ['LICENSE.txt', 'text/plain']]]);
+for (const file of ['world.html','world.css','world.js','village-engine.js','village-view.js']) FILES.set('/'+file,[file,file.endsWith('.html')?'text/html':file.endsWith('.css')?'text/css':'text/javascript']);
+for (const file of ['three.module.js','three.core.js']) FILES.set('/vendor/'+file,['../node_modules/three/build/'+file,'text/javascript']);
 const MAX_BODY = 32768;
 const MAX_RESPONSE = 65536;
 async function readJson(stream, maximum) {
