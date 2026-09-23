@@ -2,62 +2,82 @@
 
 **Semantic if-statements for your software.**
 
-A developer playground for structured AI decisions, created by [Pasindu Suraweera](https://github.com/PasinduSuraweera). The goal is to help developers test decisions, inspect uncertainty, and decide when software should act or ask for review.
+A decision workbench by [Pasindu Suraweera](https://github.com/PasinduSuraweera). Explore how model predictions become software decisions, and where uncertain outcomes need human review.
 
-## Current status
+## What works
 
-This initial version is a responsive static website with a working **local simulation**. It does not call Jev. Example probabilities are illustrative, not measured model confidence. The planned live API features are not implemented yet.
+- Local demo with four scenarios: Support Routing, Agent Guardrails, RAG Decisions, GitHub Triage.
+- Live Jev requests using your own API key through a same-origin Node server.
+- JSON editing, validation, cancellation, and explicit live/demo labels.
+- Choice, score, and yes/no results with provider probabilities and measured round-trip latency.
+- Adjustable decision threshold and action previews. No external actions are executed.
+- Copyable response JSON and TypeScript/YAML examples.
 
-- Editable JSON with validation, reset, and Ctrl/Cmd + Enter
-- Support Routing, Agent Guardrails, RAG Decisions, and GitHub Triage examples
-- Structured results, illustrative confidence, and suggested actions
-- Copyable TypeScript and YAML examples
-- Responsive layout and reduced-motion support
+Live integration follows the official API contract and is tested with mocked provider responses. It has **not yet been verified against Jev with a real API key**. Batch evaluation and CSV import are not implemented.
 
 ## Run locally
 
-Clone this repository, then serve the static files:
+Requires Node.js 22 or later. No runtime dependencies or installation step.
 
 ```sh
 git clone https://github.com/PasinduSuraweera/jevflow.git
 cd jevflow
-python3 -m http.server 8080 --directory dist
+npm start
 ```
 
-Open http://localhost:8080. The website needs no build step. Google Fonts are optional external requests; system font fallbacks are provided. Playground context is processed locally and is not sent to a model.
+Open http://localhost:3000. Choose **Live Jev API**, paste your key, and click **Run decision**. Each live request sends your context to TypeSafe and may incur provider charges. The initial mode is local demo and makes no model calls.
 
-## Project structure
+```sh
+npm run check
+npm test
+```
+
+A plain static server can still run the demo, but cannot run live requests. Use `npm start` for the complete app.
+
+## Key handling and trust
+
+The key is kept in the page's password input, never in localStorage, cookies, or sessionStorage. It clears on refresh/page exit, switching to demo, or **Clear key**. Extensions, compromised hosts, and browser password managers are outside the application's control.
+
+For live runs, the browser sends the key in `X-Jev-Key` to **this application's server**, which forwards it as a bearer credential to `https://api.typesafe.ai/v1/systemone`. Context goes to TypeSafe. Only enter a key on a host you trust, or self-host.
+
+The application has no database, request-body logging, API-key logging, analytics, or external frontend scripts/fonts. Errors returned to clients are sanitized. Reverse proxies, hosting infrastructure and the provider have separate logging and data policies. Disable sensitive header/body capture there too. Cancellation attempts to abort the request; it cannot guarantee cancellation of provider processing or charges.
+
+## Decision policy
+
+- Choice: preview a route/label only when provider confidence meets the threshold.
+- Yes/no: use the probability of the selected answer. Only a sufficiently confident **yes** can preview allow; explicit `requires_approval: true` always goes to review.
+- Score: display Jev's expected score on a 0–2 relevance rubric **separately** from provider confidence. Low confidence goes to review. Otherwise normalized relevance is compared to the threshold to include context or retrieve more.
+
+Threshold changes recalculate the preview locally without additional API calls. Results are advisory, not proof of safety. Agent guardrail examples are not an authorization system.
+
+## Self-hosting
+
+Run one Node process behind an HTTPS reverse proxy:
+
+```sh
+PUBLIC_ORIGIN=https://your-domain.example HOST=127.0.0.1 PORT=3000 npm start
+```
+
+`PUBLIC_ORIGIN` must be the exact browser origin, without a trailing slash or path. Plain HTTP is allowed only for loopback development. Set `HOST=0.0.0.0` only when your container or hosting network requires it. The app ignores forwarded-IP headers rather than trusting spoofable values.
+
+Controls include a 32 KB JSON input limit, 64 KB provider response limit, a 15-second provider deadline, schema and response validation, origin checks, no CORS permission, no automatic API retries, four concurrent live requests, and 20 requests/minute per socket IP. Limits are in-memory and reset on restart. Behind a reverse proxy all visitors may share its socket-IP limit. Multi-instance/public production hosting should add deployment-level rate limiting, request-size limits, TLS and appropriate abuse controls. This starter has no account authentication.
+
+Origin checking protects browser requests; it does not authenticate non-browser clients. A user must supply their own valid provider key. The server never accepts a user-selected upstream URL or uses a shared server API key.
+
+## Layout
 
 | Path | Purpose |
 | --- | --- |
-| `dist/index.html` | Page structure and content |
-| `dist/style.css` | Responsive styling |
-| `dist/app.js` | Local rules and playground interactions |
-| `examples/route.ts` | Official TypeSafe SDK integration example |
-| `ROADMAP.md` | Proposed first live release |
+| `dist/` | Frontend and local simulation |
+| `server/index.mjs` | Static server, bounded BYOK proxy and request controls |
+| `server/decisions.mjs` | Provider request mapping and response validation |
+| `test/` | Mocked HTTP integration and policy tests |
+| `examples/route.ts` | Separate official SDK example |
 
-## Actual Jev integration
+The server uses Node's built-in fetch against the official HTTP API. Reference: [TypeSafe SDK types](https://github.com/typesafe-ai/typesafe-sdk-js/blob/main/src/types.ts).
 
-The separate server-side example uses the [official TypeSafe SDK](https://github.com/typesafe-ai/typesafe-sdk-js). With Node.js 20 or later:
+The separate SDK example needs `npm install @typesafe-ai/sdk`, `TYPESAFE_API_KEY` in your server environment and a TypeScript runner such as `npx tsx examples/route.ts`. The YAML on the site remains an illustrative schema, not an executable runner.
 
-```sh
-npm install @typesafe-ai/sdk
-export TYPESAFE_API_KEY="your-key"
-npx tsx examples/route.ts
-```
+## Contributing and license
 
-This example makes a real API request and may incur provider charges. Keep the key on your server. Never commit it or embed it in client JavaScript. The example logs a selected route; it does not execute business actions.
-
-The YAML on the website illustrates a possible workflow schema. No YAML workflow runner is included.
-
-## Limitations
-
-The guardrail demo is not a security control. The RAG demo measures token overlap rather than semantic relevance. Local rule results do not establish Jev accuracy, calibration, latency, or safety. This repository does not yet include a hosted API proxy, rate limiting, batch evaluation, or persistent storage.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Development continues through reviewable branches and pull requests. See [ROADMAP.md](ROADMAP.md) for the proposed BYOK workbench.
-
-## License and attribution
-
-MIT for JevFlow's code. Independent project, not affiliated with or endorsed by TypeSafe AI. Jev and System One are TypeSafe AI products; their service terms and SDK licensing apply separately.
+See CONTRIBUTING.md and ROADMAP.md. MIT licensed. Independent project, not affiliated with or endorsed by TypeSafe AI. Jev's service terms and upstream SDK license apply separately.
