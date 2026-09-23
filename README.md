@@ -8,10 +8,12 @@ An original open-source village simulation by [Pasindu Suraweera](https://github
 
 - An interactive low-poly 3D village with cottages, a café, workshop, garden and pond.
 - Mira, Rowan and Pip have distinct personalities, hunger, energy, happiness, coins and recent memories.
-- Real Jev choices drive eating, resting, working, gardening, exploring and socializing. Ordinary code controls movement and resource changes.
+- Real Jev choices drive eating, resting, working, gardening, exploring, socializing, fishing, foraging, cooking, reading and exercise. Ordinary code controls movement and resource changes.
 - Select a villager to inspect the exact submitted context, returned probabilities and confidence.
 - Influence the world with rain, café closure and food supplies.
 - Pause, one-decision mode, simulation speed and a request budget. At most one request at a time, at least five seconds apart.
+- Nighttime HUD and map labels, glowing windows, opening doors and indoor arrival/exit phases.
+- Walking and running with jointed limbs and action-specific handheld props.
 - Day/night lighting, visible rain, chimney smoke, butterflies, pond ripples and activity animations.
 - Fullscreen village view with floating, collapsible tools, a permanent play dock and live resident wellbeing cards.
 - Follow camera, activity progress and village milestones. Work earns community funds for a larger garden and warm night lanterns.

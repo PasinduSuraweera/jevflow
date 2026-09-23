@@ -1,4 +1,4 @@
-import {createWorld,decisionContext,applyDecision,upgradeVillage,ACTIONS,tick,RequestGate} from './village-engine.js';
+import {createWorld,decisionContext,applyDecision,upgradeVillage,ACTIONS,isNight,tick,RequestGate} from './village-engine.js';
 const $=id=>document.getElementById(id);
 const world=createWorld(),gate=new RequestGate();let selected='mira',playing=false,ready=false,view=null,controller=null,epoch=0,cursor=0,lastFrame=0,lastUI=0;
 const current=()=>world.villagers.find(v=>v.id===selected);
@@ -9,7 +9,7 @@ function status(text){$('world-status').textContent=text;}
 function pause(message='Paused · the village can wait.'){playing=false;epoch++;controller?.abort();world.villagers.forEach(v=>{if(v.status==='thinking'){v.status='idle';v.thought='Decision paused. No new activity was chosen.';}});$('play').textContent='▶ Start village';status(message);updateControls();}
 function updateControls(){const key=/^[\x21-\x7e]{8,512}$/.test($('key').value.trim());$('play').disabled=!playing&&(!ready||!view||!key||gate.used>=budget());$('step').disabled=!ready||!view||!key||playing||gate.active||gate.used>=budget();$('used').textContent=gate.used;$('limit').textContent=budget();}
 function select(id,open=false){if(open)showPanel('inspector');selected=id;view?.select(id);document.querySelectorAll('[data-resident]').forEach(b=>{b.classList.toggle('selected',b.dataset.resident===id);b.setAttribute('aria-pressed',String(b.dataset.resident===id));});renderInspector(true);}
-function renderInspector(full=false){const v=current();$('resident-name').textContent=v.name;$('coins').textContent=v.money+' coins';$('personality').textContent=v.personality;$('activity').textContent=v.status==='thinking'?'Asking Jev':v.status==='acting'?v.action:v.status;$('thought').textContent=v.thought;
+function renderInspector(full=false){const v=current();$('resident-name').textContent=v.name;$('coins').textContent=v.money+' coins';$('personality').textContent=v.personality;$('activity').textContent=v.status==='thinking'?'A new choice':v.status==='acting'?'Right now':v.status==='walking'?(v.gait==='run'?'On the run':'On the way'):v.status==='idle'?'Taking a moment':'At the door';$('thought').textContent=v.thought;
  for(const [key,title,value] of [['hunger','Hunger · lower is better',v.hunger],['energy','Energy',v.energy],['happiness','Happiness',v.happiness]]){let row=$('need-'+key);if(!row){row=document.createElement('div');row.className='need';row.id='need-'+key;const label=document.createElement('div'),name=document.createElement('span'),num=document.createElement('span'),bar=document.createElement('progress');name.textContent=title;num.id='value-'+key;bar.id='bar-'+key;bar.max=100;bar.setAttribute('aria-label',title);label.append(name,num);row.append(label,bar);$('needs').append(row);}$('value-'+key).textContent=Math.round(value);$('bar-'+key).value=value;}
  const progress=v.status==='acting'?1-v.remaining/ACTIONS[v.action].duration:0;$('activity-progress').value=progress*100;$('activity-progress').hidden=v.status!=='acting';
  if(full){$('probabilities').replaceChildren();$('decision-empty').hidden=!!v.last;$('decision-json').textContent=v.last?JSON.stringify(v.last,null,2):'';$('decision-meta').textContent=v.last?`${v.last.model} · ${v.last.latencyMs} ms · ${Math.round(v.last.confidence*100)}% confidence`:'';if(v.last)for(const [name,p] of Object.entries(v.last.probabilities).sort((a,b)=>b[1]-a[1])){const row=document.createElement('div');row.className='probability';const label=document.createElement('span'),value=document.createElement('span');label.textContent=name;value.textContent=(p*100).toFixed(1)+'%';row.append(label,value);$('probabilities').append(row);}}
@@ -33,6 +33,7 @@ $('clear-key').onclick=()=>{pause('Key cleared · village paused');$('key').valu
 $('key').oninput=()=>{pause('Ready when you are · press Start village');updateControls();};
 $('budget').onchange=()=>{$('budget').value=budget();updateControls();};
 function influence(message){epoch++;controller?.abort();world.villagers.forEach(v=>{if(v.status==='thinking'){v.status='idle';v.thought='The world changed. Waiting for a fresh decision.';}});world.version++;journal(message);renderInspector(true);}
+$('time-of-day').onclick=()=>{world.time=Math.floor(world.time/1440)*1440+(isNight(world)?8:20)*60;influence(isNight(world)?'Evening settles over Willowglen.':'A new morning lights the village.');renderTown();};
 $('weather').onclick=()=>{world.weather=world.weather==='sunny'?'rainy':'sunny';$('weather').textContent=world.weather==='rainy'?'☀ Bring back the sun':'☂ Make it rain';$('weather-icon').textContent=world.weather==='rainy'?'☂':'☀';$('weather-name').textContent=world.weather==='rainy'?'Rainy':'Sunny';influence(world.weather==='rainy'?'Rain arrives. Gardening and pond trips are unavailable.':'The sun is back. Outdoor activities reopen.');};
 $('cafe').onclick=()=>{world.cafeOpen=!world.cafeOpen;$('cafe').textContent=world.cafeOpen?'Close the café':'Open the café';$('cafe-state').textContent=world.cafeOpen?'Café open':'Café closed';influence(world.cafeOpen?'The café opens its doors.':'The café closes to new visitors.');};
 $('food').onclick=()=>{world.food=Math.min(99999,world.food+3);influence('You added three meals to the café pantry.');};
@@ -61,7 +62,7 @@ function renderOverview(){
  if(concern)attention++;
  $('card-'+v.id).classList.toggle('needs-care',!!concern);
  $('mood-'+v.id).textContent=concern||'Doing well';
- $('task-'+v.id).textContent=v.status==='thinking'?'Choosing with Jev…':v.status==='acting'?ACTIONS[v.action].label:v.status==='walking'?v.thought:'Waiting for a decision';
+ $('task-'+v.id).textContent=v.status==='thinking'?'Choosing with Jev…':v.status==='acting'?ACTIONS[v.action].label:['walking','entering','exiting'].includes(v.status)?v.thought:'Waiting for a decision';
  $('hunger-'+v.id).textContent=Math.round(v.hunger);
  $('energy-'+v.id).textContent=Math.round(v.energy);
  $('joy-'+v.id).textContent=Math.round(v.happiness);
@@ -69,6 +70,7 @@ function renderOverview(){
  $('overview-summary').textContent=attention?attention+' need'+(attention===1?'s':'')+' a little care':'Everyone is doing well';
 }
 function renderTown(){
+ document.documentElement?.setAttribute('data-night',String(isNight(world)));$('time-of-day').textContent=isNight(world)?'Visit the morning':'Visit the evening';
  renderOverview();
  $('treasury').textContent=world.treasury;
  $('completed').textContent=world.completed;
