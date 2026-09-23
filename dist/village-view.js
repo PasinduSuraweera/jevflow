@@ -34,8 +34,7 @@ export function createView(canvas,world,onSelect){
  for(let i=0;i<75;i++){const a=i*2.399,x=Math.cos(a)*(3+(i%8)*1.2),z=Math.sin(a)*(3+(i%9)*1.1);if(Math.abs(x)<1.4||Math.abs(Math.abs(z)-4)<1||Math.abs(x)>3&&Math.abs(x)<9&&Math.abs(z)<8||Math.abs(x)<3&&z>7)continue;const f=ball(.095,[0xe8cf86,0xe9b1a7,0xf5ead0][i%3],x,.22,z);cyl(.022,.025,.17,0x668451,x,.08,z);}
  // Villagers have original toy-like silhouettes and independent walking limbs.
  const people=new Map(),pickables=[];
- // Weather, drifting chimney smoke, and warm village lanterns.
- const clouds=[];for(let i=0;i<5;i++){const g=new T.Group();scene.add(g);for(let j=0;j<3;j++){const puff=ball(1.1,0xf4f1df,j*1.2,0,0,g);puff.scale.set(1.4,.42,.8);}g.position.set(i*7-15,10,-10+i%2*5);clouds.push(g);}
+ // Rain, drifting chimney smoke, and warm village lanterns.
  const smoke=[];for(let i=0;i<9;i++){const puff=ball(.18,0xe1decb,-4.9,4+i*.3,-6.7);puff.material=new T.MeshStandardMaterial({color:0xebe6d8,transparent:true,opacity:.35,depthWrite:false});puff.castShadow=false;smoke.push(puff);}
  const drops=new Float32Array(240*3);for(let i=0;i<240;i++){drops[i*3]=(i*13.71%30)-15;drops[i*3+1]=i*.79%15;drops[i*3+2]=(i*7.13%30)-15;}
  const rainGeo=new T.BufferGeometry();rainGeo.setAttribute('position',new T.BufferAttribute(drops,3));const rain=new T.Points(rainGeo,new T.PointsMaterial({color:0xd9edf3,size:.08,transparent:true,opacity:.75}));scene.add(rain);
@@ -65,7 +64,6 @@ export function createView(canvas,world,onSelect){
  for(const {glow,light} of lamps){glow.material.emissiveIntensity=world.upgrades.lanterns?(1-daylight)*2:0;light.intensity=world.upgrades.lanterns?(1-daylight)*9:0;}
  const motion=running?time:world.time;rain.visible=rainy;
  for(let i=0;i<240;i++)drops[i*3+1]=15-((motion*8+i*.79)%15);rainGeo.attributes.position.needsUpdate=true;
- clouds.forEach((g,i)=>{g.position.x=((motion*.15+i*7)%40)-20;g.visible=!rainy;});
  smoke.forEach((p,i)=>{const life=(motion*.35+i/9)%1;p.position.y=4+life*2;p.position.x=-4.9+life*.5;p.scale.setScalar(1+life*2);p.material.opacity=(1-life)*.25;});
  butterflies.forEach(({g,wings},i)=>{g.visible=!rainy&&daylight>.4;g.position.set(5+Math.sin(motion*.4+i)*2,1.3+Math.sin(motion*.7+i)*.4,6+Math.cos(motion*.5+i));wings.forEach((w,j)=>w.rotation.z=Math.sin(motion*12+i)*(j?1:-1));});
  ripples.forEach((r,i)=>{const phase=(motion*.25+i/3)%1;r.scale.setScalar(.4+phase*3);r.material.opacity=(1-phase)*.35;});
