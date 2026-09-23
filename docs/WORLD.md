@@ -31,4 +31,10 @@ Before release, run in a WebGL browser on desktop and mobile, verify camera cont
 
 Each completed work shift adds 2 community coins in addition to the worker's 8 coins. Expand the garden for 12 community coins to increase future harvests to 3 meals. Buy lanterns for 8 coins to light the square after sunset. Purchases are explicit player actions, never model choices, and are limited to once per session.
 
-Milestones track 12 completed activities, 4 harvests and an average happiness of 75. Happiness is a live target and can fall again. The clock advances four village minutes per simulation second. Lighting follows the clock; weather remains player-controlled. Rain, clouds, smoke, butterflies and pond ripples are decorative and make no API requests. Reduced-motion settings suppress ambient animation. The follow button tracks the selected resident; the home camera button resets the view.
+Milestones track 12 completed activities, 4 harvests and an average happiness of 75. Happiness is a live target and can fall again. The clock advances four village minutes per simulation second. Lighting follows the clock; weather remains player-controlled. Rain, smoke, butterflies and pond ripples are decorative and make no API requests. Reduced-motion settings suppress ambient animation. The follow button tracks the selected resident; the home camera button resets the view.
+
+## Floating game interface
+
+The world fills the browser viewport. A bottom dock keeps Start/Pause and One decision available even when tools are closed. Controls, Residents, Village and World each open one floating panel. Close it with ×, its dock button or Escape. Selecting a villager in the world or overview opens their inspector. Starting play closes the tools; API errors reopen Controls.
+
+Resident cards show current activity, hunger, energy and happiness, with a care indicator for hunger at least 75, energy at most 20 or happiness below 30. These are deterministic descriptions of current game state, not generated commentary. The news panel shows actual events and can collapse. On small screens the tools become a bottom sheet; on short landscape screens resident cards collapse to preserve playable space. The fullscreen button requests browser fullscreen where supported. Sky clouds have been removed.

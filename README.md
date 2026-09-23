@@ -12,7 +12,8 @@ An original open-source village simulation by [Pasindu Suraweera](https://github
 - Select a villager to inspect the exact submitted context, returned probabilities and confidence.
 - Influence the world with rain, café closure and food supplies.
 - Pause, one-decision mode, simulation speed and a request budget. At most one request at a time, at least five seconds apart.
-- Day/night lighting, visible rain, drifting clouds and smoke, butterflies, pond ripples and activity animations.
+- Day/night lighting, visible rain, chimney smoke, butterflies, pond ripples and activity animations.
+- Fullscreen village view with floating, collapsible tools, a permanent play dock and live resident wellbeing cards.
 - Follow camera, activity progress and village milestones. Work earns community funds for a larger garden and warm night lanterns.
 - The original seven-recipe decision workbench remains at `/lab`.
 
