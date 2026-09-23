@@ -4,6 +4,7 @@ export function villageQuestion(c){
  for(const field of ['character','personality'])if(typeof c[field]!=='string'||!c[field].trim()||c[field].length>500)throw new Error('Invalid character context.');
  for(const field of ['hunger','energy','happiness'])if(typeof c[field]!=='number'||!Number.isFinite(c[field])||c[field]<0||c[field]>100)throw new Error('Needs must be between 0 and 100.');
  if(!Number.isInteger(c.money)||c.money<0||c.money>100000||!Number.isInteger(c.food)||c.food<0||c.food>100000||typeof c.cafe_open!=='boolean'||!['sunny','rainy'].includes(c.weather))throw new Error('Invalid village resources.');
+ if(c.garden_expanded!==undefined&&typeof c.garden_expanded!=='boolean')throw new Error('Invalid garden upgrade.');
  const allowed=legalActions({cafeOpen:c.cafe_open,food:c.food,weather:c.weather},{money:c.money,energy:c.energy});
- return {type:'choice',instructions:'Choose this villager\'s next activity. Hunger 100 means starving; energy 0 means exhausted; happiness 0 means unhappy. Prioritize urgent needs, consider personality, available resources and recent activities. Only choose from the legal activities listed. Favor variety when needs are met.',criteria:Object.fromEntries(allowed.map(a=>[a,ACTIONS[a].description]))};
+ return {type:'choice',instructions:'Choose this villager\'s next activity. Hunger 100 means starving; energy 0 means exhausted; happiness 0 means unhappy. Prioritize urgent needs, consider personality, available resources and recent activities. Only choose from the legal activities listed. Favor variety when needs are met.',criteria:Object.fromEntries(allowed.map(a=>[a,a==='garden'&&c.garden_expanded?ACTIONS[a].description.replace('2 meals','3 meals'):ACTIONS[a].description]))};
 }

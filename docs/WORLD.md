@@ -1,13 +1,13 @@
 # Willowglen mechanics
 
-Jev selects an activity from the actions that are legal when a request begins. The server validates the context and builds the question itself. The client validates eligibility again before applying the returned action. Confidence below 50% pauses for review.
+Jev selects an activity from the actions that are legal when a request begins. The server validates the context and builds the question itself. The client validates eligibility again before applying the returned action. All valid legal Jev choices execute regardless of confidence. Confidence remains visible as uncertainty information. If an action becomes unavailable, the villager waits for another Jev choice while the rest of the world continues.
 
 | Activity | Requirements | Completion |
 | --- | --- | --- |
 | Eat | Open café, a meal, 3 coins | Reduce hunger by 55 |
 | Rest | Always available | Restore 50 energy |
 | Work | At least 20 energy | Earn 8 coins |
-| Garden | Dry weather, at least 12 energy | Add 2 café meals |
+| Garden | Dry weather, at least 12 energy | Add 2 café meals, or 3 with an expanded garden |
 | Explore | Dry weather, at least 8 energy | Add 25 happiness |
 | Socialize | At least 5 energy | Add 20 happiness |
 
@@ -25,4 +25,10 @@ Pause, key changes, world changes and hiding the tab invalidate pending results.
 
 Run `npm ci`, `npm run check` and `npm test`. Tests cover legal action filtering, resource accounting, request gating, server context validation and mocked HTTP integration. They do not prove real-provider compatibility or WebGL rendering.
 
-Before release, run in a WebGL browser on desktop and mobile, verify camera controls and character selection, supply your own Jev key, and inspect real probabilities. Check pause during a request, the budget boundary, bad keys, provider errors and low-confidence behavior. The first implementation has not yet completed these live checks.
+Before release, run in a WebGL browser on desktop and mobile, verify camera controls and character selection, supply your own Jev key, and inspect real probabilities. Check pause during a request, the budget boundary, bad keys, provider errors and continued play after low-confidence choices. The first implementation has not yet completed these live checks.
+
+## Community progression and atmosphere
+
+Each completed work shift adds 2 community coins in addition to the worker's 8 coins. Expand the garden for 12 community coins to increase future harvests to 3 meals. Buy lanterns for 8 coins to light the square after sunset. Purchases are explicit player actions, never model choices, and are limited to once per session.
+
+Milestones track 12 completed activities, 4 harvests and an average happiness of 75. Happiness is a live target and can fall again. The clock advances four village minutes per simulation second. Lighting follows the clock; weather remains player-controlled. Rain, clouds, smoke, butterflies and pond ripples are decorative and make no API requests. Reduced-motion settings suppress ambient animation. The follow button tracks the selected resident; the home camera button resets the view.

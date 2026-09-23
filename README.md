@@ -12,9 +12,11 @@ An original open-source village simulation by [Pasindu Suraweera](https://github
 - Select a villager to inspect the exact submitted context, returned probabilities and confidence.
 - Influence the world with rain, café closure and food supplies.
 - Pause, one-decision mode, simulation speed and a request budget. At most one request at a time, at least five seconds apart.
+- Day/night lighting, visible rain, drifting clouds and smoke, butterflies, pond ripples and activity animations.
+- Follow camera, activity progress and village milestones. Work earns community funds for a larger garden and warm night lanterns.
 - The original seven-recipe decision workbench remains at `/lab`.
 
-There are no local model simulations or fallback decisions. Without a key, the village is visible but villagers do not choose activities. Low confidence or request errors pause the world.
+There are no local model simulations or fallback decisions. Without a key, the village is visible but villagers do not choose activities. Confidence is informational and never pauses the village. Request errors pause the world.
 
 Integration is tested with mocked provider responses. **Real-key Jev validation and visual 3D QA on a WebGL-enabled browser are still required.** The development browser used for this change had WebGL disabled.
 
