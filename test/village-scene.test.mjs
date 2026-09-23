@@ -17,7 +17,7 @@ test('scene constructs and updates for weather, night, activities and upgrades',
  const {createView}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
  const world=createWorld(),canvas={parentElement:{getBoundingClientRect:()=>({width:390,height:570})},addEventListener(){}};
  const view=createView(canvas,world,()=>{});view.draw(0,false);world.weather='rainy';world.time=1380;world.upgrades={garden:true,lanterns:true};view.follow(true);view.draw(10,true);
- for(const action of ['eat','rest','work','garden','explore','socialize']){const v=world.villagers[0];v.status='idle';world.weather='sunny';v.energy=100;v.money=20;startAction(world,v,action);tick(world,20);view.draw(20,true);}
- view.reset();view.zoom(.2);view.rotate(.3);view.draw(30,false);view.dispose();assert.equal(frames,9);
+ for(const action of ['eat','rest','work','garden','explore','socialize','fish','forage','cook','read','exercise']){const v=world.villagers[0];v.status='idle';world.weather='sunny';v.energy=100;v.money=20;startAction(world,v,action);tick(world,20);view.draw(20,true);}
+ view.reset();view.zoom(.2);view.rotate(.3);view.draw(30,false);view.dispose();assert.equal(frames,14);
  }finally{for(const [key,descriptor] of previous)if(descriptor)Object.defineProperty(globalThis,key,descriptor);else delete globalThis[key];}
 });

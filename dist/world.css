@@ -30,3 +30,22 @@
 
 @media(max-height:620px) and (min-width:761px){.resident-overview{max-height:calc(100dvh - 245px);overflow:auto}.game-ui .world-status{max-width:300px}}
 @media(max-height:540px) and (max-width:760px){.resident-overview{display:none}.game-ui #hud-panels{max-height:calc(100dvh - 225px);bottom:145px}.game-ui .journal{max-height:70px;overflow:auto}}
+
+/* Quiet activity typography and a moonlit palette for the complete HUD. */
+.thought{background:transparent;border:0;border-radius:0;padding:14px 0 4px;margin-top:12px}.thought>span{font:11px ui-sans-serif,system-ui,sans-serif;letter-spacing:0;text-transform:none;color:#839176}.thought p{font:18px/1.4 Georgia,serif;margin:6px 0 10px;color:#415b37}.thought progress{height:3px}
+:root[data-night=true]{color-scheme:dark;--ink:#e1e6d7;--muted:#a8b6a2;--line:#536350;--paper:#24352e;--green:#637c53}
+[data-night=true] .game-ui{background:#1e2d3b;color:#e1e6d7}
+[data-night=true] .hud-glass,[data-night=true] .game-ui .journal,[data-night=true] .game-ui .weather-pill,[data-night=true] .game-ui #hud-panels{background:#1e302cef;border-color:#62706480;box-shadow:0 12px 36px #0005,inset 0 0 0 1px #7e8c6720}
+[data-night=true] .game-ui .brand,[data-night=true] .game-ui .brand small,[data-night=true] .game-ui .world-title .eyebrow,[data-night=true] .eyebrow{color:#c0cdb1}
+[data-night=true] .drawer-heading{background:#263a32;border-color:#4a5a46;color:#e2e6d4}
+[data-night=true] button,[data-night=true] input,[data-night=true] select{color:#e0e6d6;background:#2a3e34;border-color:#4c6146}
+[data-night=true] button:hover{background:#3b5140}[data-night=true] .game-ui .primary{background:#718651;color:#fffbe7}
+[data-night=true] .resident-card,[data-night=true] .game-ui .village-stats span,[data-night=true] .game-ui .world-status,[data-night=true] .game-ui .camera-controls button{background:#263b31ed;color:#d3dfc5;border-color:#526449}
+[data-night=true] .resident-card[aria-pressed=true],[data-night=true] .residents button.selected,[data-night=true] .dock-tabs button[aria-expanded=true]{background:#405139;border-color:#849465;color:#f1eed5}
+[data-night=true] .game-ui .panel{background:transparent}
+[data-night=true] .resident-meters strong,[data-night=true] .resident-card .resident-task,[data-night=true] .thought p,[data-night=true] .game-ui .journal li:first-child,[data-night=true] .town-totals b{color:#e0e7d1}
+[data-night=true] #personality,[data-night=true] .privacy,[data-night=true] .usage,[data-night=true] .settings label,[data-night=true] .resident-meters span,[data-night=true] .resident-card-head small,[data-night=true] #overview-summary,[data-night=true] .game-ui .journal li,[data-night=true] .town p,[data-night=true] .influence p,[data-night=true] .need>div,[data-night=true] .thought>span,[data-night=true] summary,[data-night=true] details p,[data-night=true] .tag,[data-night=true] .town-totals,[data-night=true] footer,[data-night=true] #weather-name{color:#b1bea6}
+[data-night=true] .goal,[data-night=true] .probability,[data-night=true] .dock-tabs,[data-night=true] .game-ui .journal li,[data-night=true] details{border-color:#465840}
+[data-night=true] .need progress,[data-night=true] .need progress::-webkit-progress-bar{background:#40513b}[data-night=true] .need progress::-webkit-progress-value{background:#a5b877}
+[data-night=true] #error,[data-night=true] #render-error{background:#483b2d;color:#f1d5ae;border-color:#8d7250}
+[data-night=true] .game-ui .world-stage{background:#1e2d3b}

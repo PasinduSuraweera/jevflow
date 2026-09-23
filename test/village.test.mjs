@@ -33,3 +33,23 @@ test('community upgrades require earned funds and cannot be bought twice',()=>{
  const req=buildRequest({scenario:'village',context:decisionContext(w,w.villagers[0])});assert.match(req.questions.decision.criteria.garden,/3 meals/);
  const food=w.food;startAction(w,w.villagers[0],'garden');for(let i=0;i<60;i++)tick(w,1);assert.equal(w.food,food+3);assert.equal(w.harvests,1);
 });
+
+test('new activities have legal provider options and distinct resource outcomes',()=>{
+ for(const [action,food,money] of [['fish',2,0],['forage',1,2],['cook',3,0],['read',0,0],['exercise',0,0]]){
+ const w=createWorld(),v=w.villagers[0];const before={food:w.food,money:v.money,energy:v.energy,happiness:v.happiness};
+ const req=buildRequest({scenario:'village',context:decisionContext(w,v)});assert.ok(Object.hasOwn(req.questions.decision.criteria,action));
+ assert.ok(startAction(w,v,action));for(let i=0;i<100;i++)tick(w,.5);
+ assert.equal(v.status,'idle',action);assert.equal(w.food,before.food+food,action);assert.equal(v.money,before.money+money,action);assert.equal(w.completed,1,action);
+ if(action==='read')assert.ok(v.energy>before.energy);if(action==='exercise'||action==='fish')assert.ok(v.happiness>before.happiness);
+ }
+ const w=createWorld(),v=w.villagers[0];w.weather='rainy';w.cafeOpen=false;
+ for(const action of ['fish','forage','cook','read','exercise'])assert.ok(!legalActions(w,v).includes(action));
+});
+test('indoor visits pass through entering and exiting without double rewards',()=>{
+ const w=createWorld(),v=w.villagers[0];startAction(w,v,'rest');let entering=false,exiting=false;
+ for(let i=0;i<400;i++){tick(w,.1);entering||=v.status==='entering';exiting||=v.status==='exiting';}
+ assert.ok(entering);assert.ok(exiting);assert.equal(v.status,'idle');assert.equal(v.doorPhase,0);assert.equal(w.completed,1);assert.deepEqual(v.memory,['Completed rest.']);
+});
+test('exercise runs its full route before cooling down',()=>{
+ const w=createWorld(),v=w.villagers[0];startAction(w,v,'exercise');assert.equal(v.gait,'run');assert.ok(v.path.length>3);tick(w,.25);assert.ok(v.x>-.5);assert.equal(v.status,'walking');
+});

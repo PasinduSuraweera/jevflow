@@ -10,6 +10,11 @@ Jev selects an activity from the actions that are legal when a request begins. T
 | Garden | Dry weather, at least 12 energy | Add 2 café meals, or 3 with an expanded garden |
 | Explore | Dry weather, at least 8 energy | Add 25 happiness |
 | Socialize | At least 5 energy | Add 20 happiness |
+| Fish | Dry weather, at least 10 energy | Add 2 meals and 10 happiness |
+| Forage | Dry weather, at least 8 energy | Add 1 meal and earn 2 coins |
+| Cook | Open café, at least 12 energy | Add 3 meals |
+| Read | Dry weather | Restore 15 energy and add 12 happiness |
+| Exercise | Dry weather, at least 18 energy | Run a circuit and add 30 happiness |
 
 Food and meal payment are reserved at activity start. Closing the café does not cancel an existing reservation. Rain prevents new garden and exploration choices; existing activities finish. Villagers walk along paths before spending time on their activity. Needs change with simulation time and stay within 0–100.
 
@@ -38,3 +43,11 @@ Milestones track 12 completed activities, 4 harvests and an average happiness of
 The world fills the browser viewport. A bottom dock keeps Start/Pause and One decision available even when tools are closed. Controls, Residents, Village and World each open one floating panel. Close it with ×, its dock button or Escape. Selecting a villager in the world or overview opens their inspector. Starting play closes the tools; API errors reopen Controls.
 
 Resident cards show current activity, hunger, energy and happiness, with a care indicator for hunger at least 75, energy at most 20 or happiness below 30. These are deterministic descriptions of current game state, not generated commentary. The news panel shows actual events and can collapse. On small screens the tools become a bottom sheet; on short landscape screens resident cards collapse to preserve playable space. The fullscreen button requests browser fullscreen where supported. Sky clouds have been removed.
+
+## Night and animation
+
+The HUD and world labels switch to a darker palette from 19:00 to 06:00; window panes glow at night. World tools offer a morning/evening time change so you can inspect either appearance while paused. Changing time invalidates pending decisions and updates the context for the next Jev request.
+
+Exercise uses a longer running circuit. Hungry villagers with enough energy also run to a selected meal. Other travel uses a walking gait with jointed arms and legs. Fishing rods, books, baskets, hammers and watering cans accompany their respective activities. These animations are consequences of Jev choices, not additional model calls.
+
+Eating, resting and cooking enter a building through its animated doorway. During the indoor activity the character mesh is hidden; the name marker and inspector remain available. Villagers exit after rewards are applied once. Interiors are not explorable, and cooking/resting animations inside the building are not shown. The activity description above the decision details remains present, with its left border and callout background removed.
