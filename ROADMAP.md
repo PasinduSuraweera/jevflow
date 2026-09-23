@@ -6,6 +6,9 @@ JevFlow is an original autonomous village experiment. Jev provides decisions; th
 
 - Procedural 3D village and three distinct residents.
 - Needs, coins, activities, shared food and short memories.
+- Community upgrades, milestones, follow camera and activity progress.
+- Day/night lighting, visible rain and ambient village animation.
+- Informational confidence with uninterrupted legal activity choices.
 - Real-key server proxy, validated legal choices and visible probabilities.
 - World influences, pause, speed, single decision and request budget.
 - Original workbench preserved at `/lab`.
@@ -21,7 +24,7 @@ JevFlow is an original autonomous village experiment. Jev provides decisions; th
 
 - Save and restore a village without saving credentials.
 - Coordinated social encounters and relationships.
-- Richer activity animations and visible weather.
+- Coordinated social animation and richer weather mechanics.
 - Replay and export decision histories.
 - More personalities and player-created scenarios.
 
