@@ -1,0 +1,13 @@
+{
+  "name": "jevflow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server/index.mjs",
+    "test": "node --test",
+    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check dist/app.js"
+  },
+  "license": "MIT"
+}
