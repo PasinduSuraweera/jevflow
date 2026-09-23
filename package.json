@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "node server/index.mjs",
     "test": "node --test",
-    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check dist/app.js && node --check dist/recipes.js"
+    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check server/village.mjs && node --check dist/app.js && node --check dist/recipes.js && node --check dist/world.js && node --check dist/village-engine.js && node --check dist/village-view.js"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "three": "0.180.0"
+  }
 }

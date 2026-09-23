@@ -1,12 +1,13 @@
 export class HttpError extends Error {
   constructor(status, message) { super(message); this.status = status; }
 }
+import { villageQuestion } from './village.mjs';
 import { questionFor } from '../dist/recipes.js';
 const object = x => x !== null && typeof x === 'object' && !Array.isArray(x);
 const unit = x => typeof x === 'number' && Number.isFinite(x) && x >= 0 && x <= 1;
 export function buildRequest(body) {
   if (!object(body)) throw new HttpError(400, 'Provide a recipe and context.');
-  try { return { model: 'jev-latest', state: body.context, questions: { decision: questionFor(body.scenario, body.context) } }; }
+  try { return { model: 'jev-latest', state: body.context, questions: { decision: body.scenario === 'village' ? villageQuestion(body.context) : questionFor(body.scenario, body.context) } }; }
   catch (error) { throw new HttpError(400, error.message); }
 }
 function probabilities(value, labels) {

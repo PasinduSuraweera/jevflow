@@ -1,31 +1,28 @@
-# Release roadmap
+# Willowglen roadmap
 
-JevFlow helps developers inspect the boundary between model predictions and software actions. Jev is the first provider.
+JevFlow is an original autonomous village experiment. Jev provides decisions; the world, mechanics and interface are ours.
 
 ## Implemented
 
-- Real Jev calls only, with a memory-only API key field. No simulated results.
-- Seven validated recipes, including three community-inspired examples with credits.
-- Backend readiness, visible key controls, and exact question inspection.
-- Fixed-provider server proxy with input/response validation, limits, timeout and safe errors.
-- Key clearing, cancellation and stale-result invalidation.
-- Provider probabilities, distinct score/confidence presentation and latency.
-- Local threshold changes and action previews, with no external side effects.
-- Self-hosting instructions and automated mocked integration tests.
+- Procedural 3D village and three distinct residents.
+- Needs, coins, activities, shared food and short memories.
+- Real-key server proxy, validated legal choices and visible probabilities.
+- World influences, pause, speed, single decision and request budget.
+- Original workbench preserved at `/lab`.
+- Mocked integration and simulation tests.
 
-## Before a public hosted launch
+## Before release
 
-- Validate all four scenarios with a real Jev key.
-- Perform desktop/mobile browser QA on the target host.
-- Configure production HTTPS, infrastructure logging policy and deployment-level rate limits.
-- Review public/private repository visibility and hosting access separately.
+- Run the village and workbench with a real Jev key.
+- Verify the 3D scene and controls on WebGL-enabled desktop and mobile browsers.
+- Configure HTTPS, infrastructure logging policy and deployment rate limits for public hosting.
 
-## Next product milestone
+## Future experiments
 
-- JSON/CSV case upload with optional expected labels.
-- Explicit user-triggered batch execution and bounded concurrency.
-- Accuracy for labeled cases, failure counts, review rate and coverage.
-- Result export and reproducible workflow configuration.
-- Share measured demonstrations on LinkedIn, crediting TypeSafe as the provider.
+- Save and restore a village without saving credentials.
+- Coordinated social encounters and relationships.
+- Richer activity animations and visible weather.
+- Replay and export decision histories.
+- More personalities and player-created scenarios.
 
-Batch evaluation and configuration execution are not shipped yet.
+These future experiments are not implemented. Share measured, real-provider demonstrations with credit to TypeSafe as the decision provider.
