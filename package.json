@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node server/index.mjs",
     "test": "node --test",
-    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check server/village.mjs && node --check dist/app.js && node --check dist/recipes.js && node --check dist/world.js && node --check dist/village-engine.js && node --check dist/village-view.js"
+    "check": "node --check server/index.mjs && node --check server/decisions.mjs && node --check server/village.mjs && node --check dist/app.js && node --check dist/recipes.js && node --check dist/world.js && node --check dist/village-engine.js && node --check dist/village-view.js && node --check dist/icons.js && node --check server/vercel.mjs && node --check scripts/vercel-build.mjs",
+    "build:vercel": "node scripts/vercel-build.mjs"
   },
   "license": "MIT",
   "dependencies": {

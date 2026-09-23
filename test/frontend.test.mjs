@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {recipes,questionFor,validateContext} from '../dist/recipes.js';
 const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
-const source=readFileSync(new URL('../dist/app.js',import.meta.url),'utf8').replace(/^import .*;\n/,'');
+const source=readFileSync(new URL('../dist/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/,'');
 function harness(decisionFetch){
  const nodes=new Map();
  function element(){return {value:'',hidden:false,disabled:false,textContent:'',innerHTML:'',style:{},dataset:{},classList:{add(){},remove(){},toggle(){}},setAttribute(){},append(){},replaceChildren(){},addEventListener(){},focus(){},scrollIntoView(){}};}

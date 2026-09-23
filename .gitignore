@@ -6,3 +6,5 @@ node_modules/
 *.log
 .openai/
 .sites-runtime/
+site/
+.vercel/
