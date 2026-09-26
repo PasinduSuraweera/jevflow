@@ -2,7 +2,7 @@
 
 **Willowglen: a little world with a mind of its own.**
 
-An original open-source village simulation by [Pasindu Suraweera](https://github.com/PasinduSuraweera). Watch villagers decide how to spend their days using TypeSafe AI's Jev System One. Reshape their world, their rules and the residents themselves, then inspect the decisions that follow.
+An original open-source village simulation. Watch villagers decide how to spend their days using TypeSafe AI's Jev System One. Reshape their world, their rules and the residents themselves, then inspect the decisions that follow.
 
 ## What works
 
